@@ -24,8 +24,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } else {
         // Voorkom SQL injectie door input te ontsnappen
         $user = $conn->real_escape_string($user);
-        $sql = "SELECT * FROM gebruikers WHERE username = '$user'";
-        $result = $conn->query($sql);
+
+        // Prepared Statement om SQL Injectie te voorkomen
+        $stmt = $conn->prepare("SELECT * FROM gebruiker WHERE username = ?");
+        $stmt->bind_param("s", $user); // Bind 's' for string
+        $stmt->execute();
+        $result = $stmt->get_result();
 
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
@@ -53,7 +57,7 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inloggen</title>
-    <link rel="stylesheet" href="path_to_bootstrap.css"> <!-- Voeg hier Bootstrap toe als je die gebruikt -->
+    <link rel="stylesheet" href="path_to_bootstrap.css">
 </head>
 <body>
     <div class="container" style="max-width: 500px; margin-top: 50px;">
