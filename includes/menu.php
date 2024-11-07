@@ -18,7 +18,7 @@
 						<a href="begin.php?page=deel" class="nav-link">Deelnemen</a>
 					</li>
 					<li class="nav-item">
-						<a href="begin.php?page=deel" class="nav-link">login</a>
+						<a href="begin.php?page=login" class="nav-link">login</a>
 					</li>
 				</ul>
 			</div>
